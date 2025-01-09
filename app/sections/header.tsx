@@ -1,4 +1,5 @@
 import Link from "next/link";
+import 'material-icons/iconfont/outlined.css';
 
 export default function Header() {
 	return (
@@ -7,7 +8,7 @@ export default function Header() {
 			<div className="flex justify-end gap-10">
 				<Link className="flex" href={"/"}>Home</Link>
 				<Link className="flex" href={"#"}>Products</Link>
-				<Link className="flex" href={"/cart"}>Cart</Link>
+				<Link className="flex material-icons-outlined" href={"/cart"}>shopping_cart</Link>
 			</div>
 		</div>
 	)

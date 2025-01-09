@@ -32,14 +32,24 @@ export default function CartItemComponent({item}:{item:CartItem}) {
 		setCart(newCart)
 		console.log(newCart)
 	};
+
+	const removeItem = () => {
+		const items = removeItemAtIndex(cart.items, itemIndex)
+		const newCart: Cart = {
+			items: items
+		}
+		setCart(newCart)
+	}	
 	
 	return (
 		<div className="flex w-full justify-between px-10 pb-10">
 			<div className="flex flex-col w-full">
-				<div className="flex gap-20">
-					<div className="flex flex-col gap-4">
-						<span className="flex text-primary font-semibold">{item.product.name}</span>
-						<span className="flex">{formatPrice(item.product.price)}</span>
+				<div className="flex flex-col gap-10">
+					<div className="flex gap-10">
+						<div className="flex flex-col gap-2">
+							<span className="flex text-primary font-semibold">{item.product.name}</span>
+							<span className="flex">{formatPrice(item.product.price)}</span>
+						</div>
 						<div className="flex gap-4">
 							<ChangePropertyAmount
 								value={item.amount}
@@ -47,6 +57,7 @@ export default function CartItemComponent({item}:{item:CartItem}) {
 								handler={handleAmountChange}/>
 						</div>
 					</div>
+					<button onClick={() => removeItem()} className="flex text-[12px] text-red-400">Remove</button>
 				</div>
 			</div>
 			<span className="flex">{formatPrice(item.product.price * item.amount)}</span>
