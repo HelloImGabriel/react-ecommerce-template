@@ -37,12 +37,6 @@ export default function CartPage () {
 		return total
 	}
 
-	const EmptyCart = (): ReactNode => {
-		return (
-			<div className="flex">Su carro esta vacío, vuelva al inicio.</div>
-		)
-	}
-
 	const Cart = (): ReactNode => {
 		return (
 			<div className="flex gap-10">
@@ -102,7 +96,7 @@ export default function CartPage () {
 
 	return (
 		<div className="flex flex-col w-full px-2 md:px-10 xl:px-60 py-20">
-			{(cart.items.length > 0) ? <Cart/> : <EmptyCart/>}
+			{(cart.items.length > 0) ? <Cart/> : <div className="flex">{"The cart it's empty"}</div>}
 		</div>
 	)
 }

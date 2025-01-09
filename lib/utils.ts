@@ -22,6 +22,11 @@ export const sanitizeString = (input: string) => {
 };
 
 export function formatPrice(price: number): string {
+    // Verificar si el número es entero
+    if (Number.isInteger(price)) {
+        return `$${price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`;
+    }
+    // Agregar separadores de miles y dos decimales
     return `$${price.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`;
 }
 

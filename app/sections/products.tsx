@@ -4,6 +4,7 @@ import { Product } from "@prisma/client"
 import { useEffect, useState } from "react"
 import { useCart } from "../components/cart-provider"
 import { CartItem } from "../cart/page"
+import { formatPrice } from "@/lib/utils"
 
 export default function Products() {
 
@@ -15,14 +16,25 @@ export default function Products() {
 
 		const cartItem: CartItem = {product: product, amount: 1}
 
+		const addItemToCart = () => {
+			const items: CartItem[] = cart.items
+			for (const item of items) {
+				if (item.product.name === product.name) {
+					item.amount += 1
+					return setCart({items: items})
+				}
+			}
+			setCart({items: [...cart.items, cartItem]})
+		}
+
 		return (
 			<div className="flex flex-col w-60 h-fit p-6 gap-4 bg-white shadow-md">
 				<span className="flex font-semibold">{product.name}</span>
 				<span className="flex text-sm">{product.category}</span>
 				<span className="flex text-sm">{product.description}</span>
 				<div className="flex justify-between">
-					<span className="flex font-semibold">{`$${product.price}`}</span>
-					<button onClick={() => setCart({items: [...cart.items, cartItem]})} className="flex text-blue-500">+ Add to cart</button>
+					<span className="flex font-semibold">{`${formatPrice(product.price)}`}</span>
+					<button onClick={() => addItemToCart()} className="flex text-blue-500">+ Add to cart</button>
 				</div>
 			</div>
 		)
