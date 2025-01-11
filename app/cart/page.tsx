@@ -1,19 +1,10 @@
 'use client'
 
-import { Product } from "@prisma/client"
 import React, { ReactNode } from "react"
 import { useCart } from "../components/cart-provider"
-import CartItem from "../components/cart-item"
 import { formatPrice } from "@/lib/utils"
-
-export interface CartItem {
-	product: Product
-	amount: number
-}
-
-export interface Cart {
-	items: CartItem[]
-}
+import CartItemComponent from "../components/cart-item"
+import { CartItem } from "@/lib/cart"
 
 const extraCharges = [{charge: 'Entrega', price: 40}]
 
@@ -23,7 +14,7 @@ export default function CartPage () {
 
 	const getSubtotal = () => {
 		let subtotal = 0
-		for (const item of cart.items) {
+		for (const item of cart.cart.items) {
 			subtotal += item.product.price * item.amount
 		}
 		return subtotal
@@ -49,10 +40,10 @@ export default function CartPage () {
 						</div>
 						<div className="w-full h-[1px] bg-black/10"></div>
 					</div>
-					{cart.items.map((item, key) => {
+					{cart.cart.items.map((item: CartItem, key: number) => {
 						return (
 							<div key={key} className="flex flex-col py-4">
-								<CartItem item={item}/>
+								<CartItemComponent item={item}/>
 								<div className="w-full h-[1px] bg-black/10"></div>
 							</div>
 						)
@@ -96,7 +87,7 @@ export default function CartPage () {
 
 	return (
 		<div className="flex flex-col w-full px-2 md:px-10 xl:px-60 py-20">
-			{(cart.items.length > 0) ? <Cart/> : <div className="flex">{"The cart it's empty"}</div>}
+			{(cart.cart.items.length > 0) ? <Cart/> : <div className="flex">{"The cart it's empty"}</div>}
 		</div>
 	)
 }

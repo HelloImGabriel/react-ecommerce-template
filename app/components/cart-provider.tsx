@@ -1,18 +1,26 @@
 'use client'
 
+import { Cart, CartClass, CartItem } from '@/lib/cart';
 import React, { createContext, useContext, useEffect, useState } from 'react';
-import { Cart } from '../cart/page';
 
 interface CartContextType {
-	cart: Cart;
-	setCart: React.Dispatch<React.SetStateAction<Cart>>;
+	cart: CartClass;
+	setCart: React.Dispatch<React.SetStateAction<CartClass>>;
+	removeItemFromCart: (item: CartItem) => void; // Nueva función global;
 }
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
 
 const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
 	
-	const [currentCart, setCurrentCart] = useState<Cart>({items: []})
+	const [currentCart, setCurrentCart] = useState<CartClass>(new CartClass({items: []}))
+
+	const removeItemFromCart = (item: CartItem) => {
+		currentCart.removeItem(item);
+		const newCart = new CartClass(currentCart.cart);
+		setCurrentCart(newCart);
+	};
+
 
 	useEffect(() => {
 		const recoverCart = async () => {
@@ -20,7 +28,8 @@ const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => 
 			if (typeof window !== 'undefined' && savedCartString) {
 				const savedCart: Cart = JSON.parse(savedCartString)
 				if (savedCart.items.length > 0) {
-					setCurrentCart(savedCart)
+					const newCart = new CartClass(savedCart)
+					setCurrentCart(newCart)
 				}
 			}
 		}
@@ -28,13 +37,11 @@ const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => 
 	  }, []);
 	
 	useEffect(() => {
-		localStorage.setItem('cart', JSON.stringify(currentCart))
-		//DEBUG: LOG
-		console.log(currentCart)
+		localStorage.setItem('cart', JSON.stringify(currentCart.cart))
 	}, [currentCart])
 
 	return (
-		<CartContext.Provider value={{cart: currentCart, setCart: setCurrentCart}}>
+		<CartContext.Provider value={{cart: currentCart, setCart: setCurrentCart, removeItemFromCart}}>
 			{children}
 		</CartContext.Provider>
 	);

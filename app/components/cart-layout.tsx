@@ -13,8 +13,8 @@ export default function CartLayout({handlerState}:{handlerState:Dispatch<SetStat
 	const CartList = () => {
 		return (
 			<div className="flex flex-col w-full h-full justify-between">
-				<div className="flex flex-col gap-2 p-4 overflow-y-auto">
-					{cart.items.map((item, n) => {
+				<div className="flex flex-col gap-10 p-4 overflow-y-auto">
+					{cart.cart.items.map((item, n) => {
 						return (
 							<CartItemComponent key={n} item={item}/>
 						)
@@ -34,10 +34,10 @@ export default function CartLayout({handlerState}:{handlerState:Dispatch<SetStat
 	}
 
 	return (
-		<div className="absolute flex w-full h-screen top-0 left-0 pt-20 justify-end bg-black/40">
+		<div className="absolute z-50 flex w-full h-screen top-0 left-0 justify-end bg-black/40">
 			<ClickAwayListener onClickAway={() => handlerState(false)}>
-				<div className="flex flex-col w-96 h-full bg-white">
-					{cart.items.length > 0 ? <CartList/> : <Empty/>}
+				<div className="relative z-50 flex flex-col w-96 h-full bg-white">
+					{cart.cart.items.length > 0 ? <CartList/> : <Empty/>}
 				</div>
 			</ClickAwayListener>
 		</div>
