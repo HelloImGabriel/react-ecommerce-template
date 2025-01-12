@@ -5,13 +5,7 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --primary: #2563eb
 }
 
 body {
@@ -22,4 +16,29 @@ body {
 
 .global-padding {
   padding-inline: 160px;
+}
+
+/* Estilización del scrollbar utilizando pseudo-clases */
+::-webkit-scrollbar {
+  width: 8px;
+  border-radius: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--primary);  /* Color del pulgar del scrollbar */
+  border-radius: 8px
+}
+
+::-webkit-scrollbar-track {
+  background-color: #e0e0e0;  /* Color del fondo del scrollbar */
+  border-radius: 8px
+}
+
+/* Scrollbar para contenido anidado */
+.nested-content::-webkit-scrollbar-thumb {
+  background-color: var(--primary);  /* Color del thumb del scrollbar secundario */
+}
+
+.nested-content::-webkit-scrollbar-track {
+  background-color: #e0e0e0;  /* Color del track del scrollbar secundario */
 }

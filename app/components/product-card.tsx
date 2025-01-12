@@ -12,7 +12,7 @@ export default function ProductCard(props: { product: Product; }) {
     const productQuantity = cart.getProductQuantity(product);
 
 	return (
-		<div className="flex flex-col w-60 h-60 p-6 justify-between bg-white shadow-md">
+		<div className="flex flex-col w-60 h-60 p-6 justify-between bg-white shadow-lg">
 			<div className="flex flex-col gap-2">
 				<span className="flex text-xl">{product.name}</span>
 				<span className="flex text-sm text-neutral-400">{product.category}</span>
@@ -24,7 +24,7 @@ export default function ProductCard(props: { product: Product; }) {
 					<ProductButtons product={product}/>
 				</div>
 			:
-				<button onClick={() => cart.addOneToCart(product)} className="flex text-blue-500">+ Add to cart</button>
+				<button onClick={() => cart.addOneToCart(product)} className="flex text-primary">+ Add to cart</button>
 			}
 		</div>
 	)
@@ -36,7 +36,7 @@ export const ProductButtons = ({product}:{product:Product}) => {
 	const productQuantity = cart.getProductQuantity(product);
 
 	return (
-		<div className="flex w-full">
+		<div className="flex w-full select-none">
 			<div className="flex w-full items-center">
 				<QuantityButton label={"-"} onClick={() => cart.removeOneFromCart(product)}/>
 				<div className="flex w-10 justify-center">{productQuantity}</div>

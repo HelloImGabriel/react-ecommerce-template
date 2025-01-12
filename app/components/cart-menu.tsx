@@ -4,6 +4,7 @@ import { motion } from "motion/react"
 import { Dispatch, SetStateAction } from "react"
 import CartItem from "./cart-item"
 import ClickAwayListener from "@mui/material/ClickAwayListener"
+import Link from "next/link"
 
 export default function CartMenu({setOpenMenu}:{setOpenMenu:Dispatch<SetStateAction<boolean>>}) {
 	return (
@@ -20,14 +21,14 @@ export default function CartMenu({setOpenMenu}:{setOpenMenu:Dispatch<SetStateAct
 					exit={{opacity: 0, x: 100}}
 					transition={{bounce: 0}}
 					className="flex w-80 h-full p-4 gap-10 bg-white">
-						<CartItems/>
+						<CartItems setOpenMenu={setOpenMenu}/>
 					</motion.div>
 				</ClickAwayListener>
 			</motion.div>
 	)
 }
 
-const CartItems = () => {
+const CartItems = ({setOpenMenu}:{setOpenMenu:Dispatch<SetStateAction<boolean>>}) => {
 
 	const cart = useCart()
 
@@ -46,7 +47,7 @@ const CartItems = () => {
 								<span className="flex">Total</span>
 								<span className="flex">{formatPrice(cart.getTotalCost())}</span>
 							</div>
-							<button className="flex w-full py-2 justify-center rounded-md bg-blue-600 text-white">Continue</button>
+							<Link onClick={() => setOpenMenu(false)} href={"/cart"} className="flex w-full py-2 justify-center rounded-md bg-primary text-white">Continue</Link>
 						</div>
 					</div>
 				)

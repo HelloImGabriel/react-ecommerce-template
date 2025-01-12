@@ -27,8 +27,23 @@ export function CartProvider({children}:{children:React.ReactNode}) {
             if (!products) {return}
             setAllProducts(products)
         }
+        const recoverCart = async () => {
+            const savedCartString = localStorage.getItem('cart')
+			if (typeof window !== 'undefined' && savedCartString) {
+				const savedCart: Item[] = JSON.parse(savedCartString)
+				if (savedCart.length > 0) {
+					setCartProducts(savedCart)
+				}
+			}
+
+        }
         fetchProducts()
+        recoverCart()
     }, [])
+
+    useEffect(() => {
+		localStorage.setItem('cart', JSON.stringify(cartProducts))
+	}, [cartProducts])
 
     function getProductQuantity(product: Product) {
         const quantity = cartProducts.find(item => item.product.id === product.id)?.quantity;
